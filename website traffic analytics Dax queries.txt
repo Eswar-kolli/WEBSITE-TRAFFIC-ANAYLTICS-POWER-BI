@@ -1,0 +1,38 @@
+
+DAX Queries for website traffic analytics:
+
+1.Create Date Table
+
+Date_Lookup = 
+ADDCOLUMNS(
+   CALENDAR(MIN(website_traffic_data[Date_Key]),
+MAX(website_traffic_data[Date_Key])),
+"Year",Year([Date]),
+"Quarter","Q" & QUARTER([Date]),
+"MonthName",FORMAT([Date],"MMM"),
+"MonthNumber",MONTH([Date]),
+"Week",WEEKNUM([Date]),
+"Weekday",WEEKDAY([Date]),
+"Day",FORMAT([Date],"DDD")
+)
+
+2.Average Session Duration measure in Hours
+
+Avg_Session_Duration = AVERAGE(website_traffic_data[Session_Duration])/3600
+#Session duration in dataset is defined in seconds so convert them in to hours by deviding with 3600 seconds.
+
+3.Total Number of Sessions measure
+Total_Number_Of_Sessions = count(website_traffic_data[Session_Id])
+
+4.Total page views measure
+Total_page_views = sum(website_traffic_data[Page_Views_Per_Session])
+
+5.Total session Duration Measure in Hours
+Total_Session_Duration = Sum(website_traffic_data[Session_Duration])/3600
+
+6.Bounce rate measure
+Bounce_Rate = 
+var Bounced_Session = CALCULATE(COUNT(website_traffic_data[Session_Id]),
+website_traffic_data[Page_Views_Per_Session]<2)
+var output = DIVIDE(Bounced_Session,[Total_Number_Of_Sessions],0)
+RETURN output
