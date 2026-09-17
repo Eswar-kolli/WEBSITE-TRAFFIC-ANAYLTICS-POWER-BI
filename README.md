@@ -8,7 +8,6 @@ MySQL queries were also used independently to **cross-check the results produced
 
 ---
 
-## 📸 Dashboard Preview
 
 ![Summary Dashboard](Screenshots/Summary%20dashboard.png)
 
